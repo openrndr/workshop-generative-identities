@@ -1,0 +1,3 @@
+rootProject.name = 'workshop-generative-identities'
+
+include 'dots-001'
