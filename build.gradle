@@ -1,7 +1,7 @@
 import org.gradle.internal.os.OperatingSystem
 
-group 'org.openrndr.examples'
-version '0.4-SNAPSHOT'
+group 'org.openrndr.workshop'
+version '1.0'
 
 buildscript {
     ext.kotlin_version = '1.2.60'
@@ -55,6 +55,7 @@ allprojects {
         compile "org.openrndr:openrndr-core:$rndr_version"
         compile "org.openrndr:openrndr-animatable:$rndr_version"
         compile "org.openrndr:openrndr-svg:$rndr_version"
+        compile "org.openrndr:openrndr-ffmpeg:$rndr_version"
         runtime "org.openrndr:openrndr-gl3:$rndr_version"
         runtime "org.openrndr:$rndr_gl3_natives:$rndr_version"
     }

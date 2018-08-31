@@ -1,0 +1,79 @@
+#version 330
+
+#define d_vertex_buffer 0
+#define d_image 1
+#define d_circle 2
+#define d_rectangle 3
+#define d_font_image_map 4
+#define d_expansion 5
+#define d_fast_line 6
+#define d_primitive d_image
+
+
+layout(origin_upper_left) in vec4 gl_FragCoord;
+
+uniform sampler2D image;
+
+layout(shared) uniform ContextBlock {
+    uniform mat4 u_modelNormalMatrix;
+    uniform mat4 u_modelMatrix;
+    uniform mat4 u_viewNormalMatrix;
+    uniform mat4 u_viewMatrix;
+    uniform mat4 u_projectionMatrix;
+    uniform float u_contentScale;
+    uniform vec2 u_viewDimensions;
+};
+
+layout(shared) uniform StyleBlock {
+    uniform vec4 u_fill;
+    uniform vec4 u_stroke;
+    uniform float u_strokeWeight;
+    uniform float[25] u_colorMatrix;
+};
+
+in vec3 va_position;
+in vec3 va_normal;
+in vec2 va_texCoord0;
+in vec4 vi_source;
+in vec4 vi_target;
+
+
+in vec3 v_worldNormal;
+in vec3 v_viewNormal;
+in vec3 v_worldPosition;
+in vec3 v_viewPosition;
+in vec4 v_clipPosition;
+
+out vec4 o_color;
+in vec3 v_boundsPosition;
+flat in int v_instance;
+vec4 colorTransform(vec4 color, float[25] matrix) {
+    float r = color.r * matrix[0] + color.g * matrix[5] + color.b * matrix[10] + color.a * matrix[15] + matrix[20];
+    float g = color.r * matrix[1] + color.g * matrix[6] + color.b * matrix[11] + color.a * matrix[16] + matrix[21];
+    float b = color.r * matrix[2] + color.g * matrix[7] + color.b * matrix[12] + color.a * matrix[17] + matrix[22];
+    float a = color.r * matrix[3] + color.g * matrix[8] + color.b * matrix[13] + color.a * matrix[18] + matrix[23];
+    return vec4(r, g, b, a);
+}
+
+void main(void) {
+    
+int c_instance = v_instance;
+int c_element = 0;
+vec2 c_screenPosition = gl_FragCoord.xy / u_contentScale;
+float c_contourPosition = 0;
+vec3 c_boundsPosition = v_boundsPosition;
+vec3 c_boundsSize = vec3(0.0);
+
+    vec4 x_fill = texture(image, va_texCoord0);
+    vec4 x_stroke = u_stroke;
+    {
+        float l = smoothstep(1.0, 0.0, va_texCoord0-vec2(0.5, 0.5));
+x_fill.a *= l;
+
+    }
+    float div = x_fill.a != 0.0 ? x_fill.a : 1.0;
+    x_fill.rgb /= div;
+    x_fill = colorTransform(x_fill, u_colorMatrix);
+    x_fill.rgb *= x_fill.a;
+    o_color = x_fill;
+}
