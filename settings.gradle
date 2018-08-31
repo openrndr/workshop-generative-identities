@@ -8,4 +8,5 @@ include 'dots-001',
         'image-001',
         'contours-001',
         'contours-002',
+        'contours-003',
         'webcam-001'
