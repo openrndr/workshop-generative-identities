@@ -13,7 +13,7 @@ class Dots002 : Program() {
     var drawFunc = {}
 
     override fun setup() {
-        val composition = loadSVG(File("data/logo.svg").readText())
+        val composition = loadSVG(File("dots-002/data/logo.svg").readText())
 
         drawFunc = {
             for (shape in composition.findShapes()) {
