@@ -9,7 +9,6 @@ import org.openrndr.shape.Rectangle
 
 lateinit var image: ColorBuffer
 
-
 class Image001 : Program() {
 
     override fun setup() {

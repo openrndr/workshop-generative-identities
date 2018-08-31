@@ -11,7 +11,6 @@ import org.openrndr.math.map
 import org.openrndr.shape.Rectangle
 
 
-
 class Webcam001 : Program() {
 
     lateinit var videoPlayer: FFMPEGVideoPlayer
@@ -69,4 +68,3 @@ fun main(args: Array<String>) {
         height = 720
     })
 }
-
