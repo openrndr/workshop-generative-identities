@@ -1,3 +1,4 @@
 rootProject.name = 'workshop-generative-identities'
 
-include 'dots-001'
+include 'dots-001',
+        'image-001'
