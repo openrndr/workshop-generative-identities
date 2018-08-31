@@ -1,0 +1,17 @@
+apply plugin: 'java'
+apply plugin: 'kotlin'
+
+buildscript {
+    ext {
+        gdxVersion = '1.9.8'
+    }
+}
+
+dependencies {
+    compile "org.openrndr:openrndr-extensions:${rndr_version}"
+    compile "com.badlogicgames.gdx:gdx:$gdxVersion"
+    compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+    compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+    compile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
+    compile group: 'io.github.libktx', name: 'ktx-box2d', version: '1.9.8-b3'
+}
