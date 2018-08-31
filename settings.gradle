@@ -9,4 +9,5 @@ include 'dots-001',
         'contours-001',
         'contours-002',
         'contours-003',
-        'webcam-001'
+        'webcam-001',
+        'mosaic-001'
