@@ -43,12 +43,12 @@ class Physics001 : Program() {
 
         world = World(com.badlogic.gdx.math.Vector2(0.0f, 0.5f), false)
 
-        val fixtureWidth = width-350
+        val fixtureWidth = width-650
         val fixtureHeight = 15.0
 
 
         bodyDef = BodyDef()
-        val origin = com.badlogic.gdx.math.Vector2(width/2.0f, height-100.toFloat())
+        val origin = com.badlogic.gdx.math.Vector2(width/2.0f, height-300.toFloat())
 
         bodyDef.position.set(origin.x, origin.y)
         bodyDef.type = BodyDef.BodyType.KinematicBody
@@ -110,10 +110,20 @@ class Physics001 : Program() {
         bodyList.add(bodyShape)
 
         val cl = bodyList.size
+
         if(bodyList.size > 1) {
+            val b2 =  bodyList.get(cl - 2)
+            val b1 = bodyList.get(cl - 1)
+
+            val v2 = Vector2(b2.origin.x.toDouble(), b2.origin.y.toDouble())
+            val v1 = Vector2(b1.origin.x.toDouble(), b1.origin.y.toDouble())
+            val l = (v2-v1).length
+
+
 
             var joint = bodyList.get(cl - 2).body.distanceJointWith(bodyList.get(cl - 1).body) {
-                length = 15f
+                length = l.toFloat()
+                this.dampingRatio = 0.01f
             }
             joints.add(joint)
 
