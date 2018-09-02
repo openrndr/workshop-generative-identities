@@ -8,10 +8,6 @@ import org.openrndr.math.Vector2
 import org.openrndr.shape.Circle
 import org.openrndr.svg.loadSVG
 import java.io.File
-import com.badlogic.gdx.physics.box2d.joints.DistanceJointDef
-import com.badlogic.gdx.physics.box2d.joints.FrictionJointDef
-import com.badlogic.gdx.physics.box2d.joints.DistanceJoint
-import com.badlogic.gdx.physics.box2d.joints.FrictionJoint
 import ktx.box2d.*
 
 class Physics001 : Program() {
