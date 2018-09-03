@@ -22,8 +22,8 @@ class Physics001 : Program() {
     class Constants {
         companion object {
             var TIME_STEP = 1/60f
-            var VELOCITY_ITERATIONS = 10
-            var POSITION_ITERATIONS = 20
+            var VELOCITY_ITERATIONS = 1
+            var POSITION_ITERATIONS = 1
         }
     }
 
@@ -39,12 +39,12 @@ class Physics001 : Program() {
 
         world = World(com.badlogic.gdx.math.Vector2(0.0f, 0.5f), false)
 
-        val fixtureWidth = width-650
+        val fixtureWidth = width
         val fixtureHeight = 15.0
 
 
         bodyDef = BodyDef()
-        val origin = com.badlogic.gdx.math.Vector2(width/2.0f, height-300.toFloat())
+        val origin = com.badlogic.gdx.math.Vector2(width/2.0f, height.toFloat())
 
         bodyDef.position.set(origin.x, origin.y)
         bodyDef.type = BodyDef.BodyType.KinematicBody
@@ -63,15 +63,32 @@ class Physics001 : Program() {
         floorBody.add(bodyShape)
 
 
-        // add particles
-
+        // add dots
         for (shape in composition.findShapes()) {
             for (contour in shape.shape.contours) {
-
                 contour.equidistantPositions((contour.length / 10.0).toInt()).mapIndexed { index, it ->
                     newBall(Vector2(it.x, it.y))
                 }
+            }
+        }
 
+        // make forces
+        bodyList.forEachIndexed { index, bodyShape ->
+            bodyList.forEachIndexed { index2, bodyShape2 ->
+                if(index != index2) {
+
+                    val pos1 = bodyShape.body.position
+                    val pos2 = bodyShape2.body.position
+                    val distance = Math.sqrt(((pos1.x - pos2.x) * (pos1.x - pos2.x) + (pos1.y - pos2.y) * (pos1.y - pos2.y)).toDouble())
+
+                    if (distance < 21) {
+                        var joint = bodyShape.body.distanceJointWith(bodyShape2.body) {
+                            this.length = (distance) .toFloat()
+                        }
+                        joints.add(joint)
+                    }
+
+                }
             }
         }
 
@@ -97,8 +114,8 @@ class Physics001 : Program() {
         fixtureDef.shape = shape
         fixtureDef.shape.radius = 5.0f
         fixtureDef.density = 0.5f
-        fixtureDef.friction = 0.9f
-        fixtureDef.restitution = .1f // Make it bounce a little bit
+        fixtureDef.friction = 0.2f
+        fixtureDef.restitution = .9f // Make it bounce a little bit
         fixtureDef.shape = shape
 
         body.createFixture(fixtureDef)
@@ -106,24 +123,6 @@ class Physics001 : Program() {
         bodyList.add(bodyShape)
 
         val cl = bodyList.size
-
-        if(bodyList.size > 1) {
-            val b2 =  bodyList.get(cl - 2)
-            val b1 = bodyList.get(cl - 1)
-
-            val v2 = Vector2(b2.origin.x.toDouble(), b2.origin.y.toDouble())
-            val v1 = Vector2(b1.origin.x.toDouble(), b1.origin.y.toDouble())
-            val l = (v2-v1).length
-
-
-
-            var joint = bodyList.get(cl - 2).body.distanceJointWith(bodyList.get(cl - 1).body) {
-                length = l.toFloat()
-                this.dampingRatio = 0.01f
-            }
-            joints.add(joint)
-
-        }
 
     }
 
