@@ -1,7 +1,12 @@
 rootProject.name = 'workshop-generative-identities'
 
-include 'dots-001',
+include 'basic-001',
+        'basic-002',
+        'basic-003',
+        'dots-001',
         'dots-002',
+        'flow-001',
+        'flow-002',
         'moviedots-001',
         'moviedots-002',
         'cameradots-001',
@@ -11,4 +16,5 @@ include 'dots-001',
         'contours-003',
         'webcam-001',
         'mosaic-001',
-        'physics-001'
+        'physics-001',
+        'distance'

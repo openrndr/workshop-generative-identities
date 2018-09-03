@@ -1,7 +1,6 @@
 import org.openrndr.Program
 import org.openrndr.application
 import org.openrndr.configuration
-import org.openrndr.draw.ColorBuffer
 import org.openrndr.draw.RenderTarget
 import org.openrndr.draw.isolatedWithTarget
 import org.openrndr.draw.renderTarget
