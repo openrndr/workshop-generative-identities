@@ -18,5 +18,6 @@ include 'basic-001',
         'mosaic-001',
         'map-001',
         'physics-001',
+        'letters-001',
         'distance',
         'osm'
