@@ -16,5 +16,7 @@ include 'basic-001',
         'contours-003',
         'webcam-001',
         'mosaic-001',
+        'map-001',
         'physics-001',
-        'distance'
+        'distance',
+        'osm'
