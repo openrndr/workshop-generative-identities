@@ -6,6 +6,7 @@ import org.openrndr.color.ColorRGBa
 import org.openrndr.configuration
 import org.openrndr.draw.ColorBuffer
 import org.openrndr.draw.ColorBufferShadow
+import org.openrndr.draw.colorBuffer
 import org.openrndr.math.Vector2
 import org.openrndr.shape.Circle
 import org.openrndr.svg.loadSVG
@@ -18,6 +19,8 @@ class Flow002 : Program() {
     override fun setup() {
         val image = ColorBuffer.fromFile("data/logo-01.png")
 
+        val viz = colorBuffer(image.width, image.height)
+
         var fill = true
 
         mouse.clicked.listen {
@@ -28,6 +31,21 @@ class Flow002 : Program() {
         val field = FastestDirectionalFieldBuilder().build(image.shadow) {
             if ((it.r + it.g + it.b) / 3.0 < 0.5) 0 else 1
         }
+
+
+
+
+        for (y in 0 until field.height()) {
+            for (x in 0 until field.width()) {
+                val dist = field.distance(x,y)
+                val l = dist.length
+                val n = dist.normalized
+                //viz.shadow.write(x,y, ColorRGBa(n.x*0.5+0.5, n.y*0.5+0.5, 0.0 ))
+                viz.shadow.write(x,y, ColorRGBa(l/320.0, 0.0, 0.0))
+
+            }
+        }
+        viz.shadow.upload()
 
         fun pointInside(shadow: ColorBufferShadow): Vector2 {
             while (true) {
@@ -63,7 +81,17 @@ class Flow002 : Program() {
                 points[index] = it + distance.normalized.perpendicular * Math.cos(index*0.1)
                 radii[index] = distance.length
             }
-            drawer.circles(points, radii)
+            drawer.image(viz)
+            //drawer.circles(points, radii)
+
+            drawer.stroke = ColorRGBa.WHITE
+
+            for (y in 0 until height step 16)
+                for (x in 0 until width step 16) {
+                    val d = field.distance(x,y)
+                    if (d.length > 0)
+                    drawer.lineSegment(Vector2(x*1.0,y*1.0), Vector2(x*1.0,y*1.0) + d.normalized.perpendicular*8.0)
+                }
         }
     }
 
