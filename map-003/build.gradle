@@ -1,0 +1,5 @@
+
+dependencies {
+    compile project(":osm")
+    compile project(":distance")
+}
