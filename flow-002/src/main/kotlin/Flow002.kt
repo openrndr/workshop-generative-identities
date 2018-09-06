@@ -17,7 +17,7 @@ class Flow002 : Program() {
     var drawFunc = {}
 
     override fun setup() {
-        val image = ColorBuffer.fromFile("data/logo-01.png")
+        val image = ColorBuffer.fromFile("data/clouds.png")
 
         val viz = colorBuffer(image.width, image.height)
 
@@ -40,8 +40,8 @@ class Flow002 : Program() {
                 val dist = field.distance(x,y)
                 val l = dist.length
                 val n = dist.normalized
-                //viz.shadow.write(x,y, ColorRGBa(n.x*0.5+0.5, n.y*0.5+0.5, 0.0 ))
-                viz.shadow.write(x,y, ColorRGBa(l/320.0, 0.0, 0.0))
+                viz.shadow.write(x,y, ColorRGBa(n.x*0.5+0.5, n.y*0.5+0.5, 0.0 ))
+                //viz.shadow.write(x,y, ColorRGBa(l/320.0, 0.0, 0.0))
 
             }
         }
@@ -90,7 +90,7 @@ class Flow002 : Program() {
                 for (x in 0 until width step 16) {
                     val d = field.distance(x,y)
                     if (d.length > 0)
-                    drawer.lineSegment(Vector2(x*1.0,y*1.0), Vector2(x*1.0,y*1.0) + d.normalized.perpendicular*8.0)
+                    drawer.lineSegment(Vector2(x*1.0,y*1.0), Vector2(x*1.0,y*1.0) + d.normalized*8.0)
                 }
         }
     }

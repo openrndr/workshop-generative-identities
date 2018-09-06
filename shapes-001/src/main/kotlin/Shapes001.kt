@@ -4,6 +4,7 @@ import org.openrndr.Program
 import org.openrndr.application
 import org.openrndr.color.ColorRGBa
 import org.openrndr.configuration
+import org.openrndr.math.Vector2
 import org.openrndr.svg.loadSVG
 import java.io.File
 
@@ -12,7 +13,6 @@ class Shapes001 : Program() {
 
     override fun setup() {
         val letters = loadSVG(File("data/logo.svg").readText()).findShapes()
-
         val shapes = loadSVG(File("data/shapes.svg").readText()).findShapes()
 
         drawFunc = {
@@ -24,7 +24,7 @@ class Shapes001 : Program() {
                 drawer.pushTransforms()
                 drawer.fill = ColorRGBa.BLACK
                 drawer.shape(node.shape)
-                drawer.drawStyle.clip = node.bounds
+                //drawer.drawStyle.clip = node.bounds
 
                 drawer.stroke = ColorRGBa.PINK
                 drawer.fill = ColorRGBa.PINK
@@ -35,6 +35,8 @@ class Shapes001 : Program() {
 
                 drawer.translate(node.bounds.center)
                 drawer.rotate(seconds*45.0)
+
+                drawer.translate(mouse.position*0.1)
                 drawer.translate(-shapeNode.bounds.center)
 
                 drawer.shape(shapeNode.shape)
