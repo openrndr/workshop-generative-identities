@@ -28,5 +28,6 @@ include 'basic-001',
         'letters-001',
         'letters-002',
         'shapes-001',
+        'tool-001',
         'distance',
         'osm'
